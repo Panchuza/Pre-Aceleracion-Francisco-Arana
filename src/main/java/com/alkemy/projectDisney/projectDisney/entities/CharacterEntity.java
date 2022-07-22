@@ -13,8 +13,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "characters")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE characters SET deleted = true WHERE id=?")
@@ -40,7 +38,7 @@ public class CharacterEntity {
 
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "characters", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MovieEntity> movies = new ArrayList<>();
 
 }

@@ -1,7 +1,6 @@
 package com.alkemy.projectDisney.projectDisney.mappers;
 
 import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
-import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -16,9 +15,11 @@ import java.util.List;
 public class MovieMapper {
 
     //PRUEBA
-//    @Lazy
-//    @Autowired
-//    private CharacterMapper characterMapper;
+    @Lazy
+    @Autowired
+    private CharacterMapper characterMapper;
+    @Autowired
+    private GenreMapper genreMapper;
     //FIN PRUEBA
     public MovieEntity movieDTO2Entity(MovieDTO dto, boolean load) {
 
@@ -28,12 +29,11 @@ public class MovieMapper {
         movieEntity.setScore(dto.getScore());
         movieEntity.setTitle(dto.getTitle());
         //PRUEBA
-//        String date = String.valueOf(dto.getCreationDate());
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//        LocalDate transformedDate = LocalDate.parse(date, formatter);
-//        movieEntity.setCreationDate(transformedDate);
+        String date = dto.getCreationDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDate transformedDate = LocalDate.parse(date, formatter);
+        movieEntity.setCreationDate(transformedDate);
         //FIN PRUEBA
-
         return movieEntity;
     }
 
@@ -45,12 +45,15 @@ public class MovieMapper {
         dto.setTitle(entity.getTitle());
 
         //PRUEBA
-//        LocalDate date = entity.getCreationDate();
-//        String formatDate = date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-//        dto.setCreationDate(LocalDate.parse(formatDate));
-//        if (load) {
-//            dto.setCharacters(characterMapper.characterEntityList2DTOList((List<CharacterEntity>) entity.getCharacters(), true));
-//        }
+        //1. Get la forma original de la fecha
+        LocalDate date = entity.getCreationDate();
+        //2. Convierte en String
+        String formatDate = date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        dto.setCreationDate(formatDate);
+        if (load) {
+            dto.setCharacters(characterMapper.characterEntityList2DTOList(entity.getCharacters(), true));
+            dto.setGenre(genreMapper.genreEntity2DTO(entity.getGenre(), true));
+        }
         //FIN PRUEBA
         return dto;
     }

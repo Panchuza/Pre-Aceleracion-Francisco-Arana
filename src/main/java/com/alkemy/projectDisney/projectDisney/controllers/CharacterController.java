@@ -2,13 +2,13 @@ package com.alkemy.projectDisney.projectDisney.controllers;
 
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
 import com.alkemy.projectDisney.projectDisney.services.CharacterService;
+import com.alkemy.projectDisney.projectDisney.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("characters")
@@ -16,6 +16,19 @@ public class CharacterController {
 
     @Autowired
     CharacterService characterService;
+    @Autowired
+    private MovieService movieService;
+
+//    @Autowired
+//    public CharacterController(CharacterService characterService) {
+//        this.characterService = characterService;
+//    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<CharacterDTO>> getAll(){
+        List<CharacterDTO> characters = characterService.getAllCharacters();
+        return ResponseEntity.ok().body(characters);
+    }
 
     @PostMapping
     public ResponseEntity<CharacterDTO> save(@RequestBody CharacterDTO character) {
@@ -23,5 +36,37 @@ public class CharacterController {
         CharacterDTO characterSaved = characterService.save(character);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(characterSaved);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CharacterDTO> delete(@PathVariable Long id) {
+        this.characterService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CharacterDTO> modify(@PathVariable Long id, @RequestBody CharacterDTO characterDTO) {
+
+        CharacterDTO editedCharacter = characterService.modify(id, characterDTO);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedCharacter);
+    }
+
+    @PutMapping("/{id}/movie/{idMovie}")
+    public ResponseEntity<Void> addMovie(@PathVariable Long id, @PathVariable Long idMovie) {
+        this.characterService.addMovie(id, idMovie);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{id}/movie/{idMovie}")
+    public ResponseEntity<Void> removeMovie(@PathVariable Long id, @PathVariable Long idMovie) {
+        this.characterService.removeMovie(id, idMovie);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/{movieId}/character/{charId}")
+    public ResponseEntity<Void> addCharacter(@PathVariable Long movieId, @RequestParam Long characterId) {
+        movieService.addCharacter(movieId, characterId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

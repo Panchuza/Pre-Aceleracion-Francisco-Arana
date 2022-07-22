@@ -11,7 +11,15 @@ public interface MovieService {
 
     List<MovieDTO> getAllMovies();
 //PRUEBA
-//    void addCharacter(Long movieId, Long characterId);
-//
-//    MovieEntity getById(Long id);
+    void addCharacter(Long movieId, Long characterId);
+
+    MovieEntity getById(Long id);
+
+    void deleteMovieById(Long id);
+
+    MovieDTO modify (Long id, MovieDTO movieDTO);
+
+    List<MovieDTO> getAllMoviesAndCharacters();
+
+    void addGenre(Long movieId, Long genreId);
 }

@@ -3,14 +3,17 @@ package com.alkemy.projectDisney.projectDisney.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class CharacterDTO {
 
-    public Long id;
-    public String image;
-    public String name;
-    public Integer age;
-    public Integer weight;
-    public String history;
+    private Long id;
+    private String image;
+    private String name;
+    private Integer age;
+    private Integer weight;
+    private String history;
+    private List<MovieDTO> movies;
 }

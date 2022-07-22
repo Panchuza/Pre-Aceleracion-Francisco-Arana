@@ -7,6 +7,7 @@ import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.MovieMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.MovieRepository;
 import com.alkemy.projectDisney.projectDisney.services.CharacterService;
+import com.alkemy.projectDisney.projectDisney.services.GenreService;
 import com.alkemy.projectDisney.projectDisney.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,37 +24,69 @@ public class MovieServiceImpl implements MovieService {
     public MovieRepository movieRepository;
     @Autowired
     public CharacterService characterService;
+    @Autowired
+    public GenreService genreService;
 
     public MovieDTO save(MovieDTO dto){
-        MovieEntity mEntity = movieMapper.movieDTO2Entity(dto);
+        MovieEntity mEntity = movieMapper.movieDTO2Entity(dto, true);
         MovieEntity mEntitySaved = movieRepository.save(mEntity);
-        MovieDTO result = movieMapper.movieEntity2DTO(mEntitySaved);
+        MovieDTO result = movieMapper.movieEntity2DTO(mEntitySaved, false);
 
         return result;
     }
 
     public List<MovieDTO> getAllMovies() {
         List<MovieEntity> entities = movieRepository.findAll();
-        List<MovieDTO> result = movieMapper.movieEntityList2MovieDTOList(entities);
+        List<MovieDTO> result = movieMapper.movieEntityList2MovieDTOList(entities, false);
+
+        return result;
+    }
+    public List<MovieDTO> getAllMoviesAndCharacters() {
+        List<MovieEntity> entities = movieRepository.findAll();
+        List<MovieDTO> result = movieMapper.movieEntityList2MovieDTOList(entities, true);
 
         return result;
     }
 //PRUEBA
-//    public void addCharacter(Long movieId, Long characterId) {
-//        MovieEntity movieEntity = this.getById(movieId);
-//        movieEntity.getCharacters().size();
-//
-//        CharacterEntity character = characterService.getCharacterById(characterId);
-//        movieEntity.getCharacters().add(character);
-//        movieRepository.save(movieEntity);
-//    }
-//
-//    @Override
-//    public MovieEntity getById(Long id) {
-//        Optional<MovieEntity> movieEntity = movieRepository.findById(id);
-//        if (!movieEntity.isPresent()) {
-//            throw new ParamNotFound("Movie does not exist.");
-//        }
-//        return movieEntity.get();
-//    }
+    //@Transactional
+    public void addCharacter(Long movieId, Long characterId) {
+        MovieEntity movieEntity = this.getById(movieId);
+
+        CharacterEntity character = characterService.getCharacterById(characterId);
+        movieEntity.getCharacters().add(character);
+        movieRepository.save(movieEntity);
+    }
+
+    public void addGenre(Long movieId, Long genreId) {
+        MovieEntity movieEntity = this.getById(movieId);
+
+        movieEntity.setGenreId(genreService.getGenreById(genreId).getId());
+        movieRepository.save(movieEntity);
+    }
+
+    @Override
+    public MovieEntity getById(Long id) {
+        Optional<MovieEntity> movieEntity = movieRepository.findById(id);
+        if (!movieEntity.isPresent()) {
+            throw new ParamNotFound("Movie does not exist.");
+        }
+        return movieEntity.get();
+    }
+
+    public void deleteMovieById(Long id) {
+        movieRepository.deleteById(id);
+    }
+
+    public MovieDTO modify (Long id, MovieDTO moviedto){
+        MovieEntity savedMovie = this.getById(id);
+
+        savedMovie.setTitle(moviedto.getTitle());
+        savedMovie.setImage(moviedto.getImage());
+        savedMovie.setScore(moviedto.getScore());
+
+        MovieEntity movieEntity = movieRepository.save(savedMovie);
+        MovieDTO result = movieMapper.movieEntity2DTO(movieEntity, true);
+
+        return result;
+    }
 }

@@ -14,7 +14,8 @@ public class MovieDTO {
     private String image;
     private Integer score;
     private String title;
-    private LocalDate creationDate;
+    private String creationDate;
     //PRUEBA
     private List<CharacterDTO> characters;
+    private GenreDTO genre;
 }
