@@ -1,11 +1,14 @@
 package com.alkemy.projectDisney.projectDisney.services.impl;
 
+import com.alkemy.projectDisney.projectDisney.dto.MovieBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
+import com.alkemy.projectDisney.projectDisney.dto.MovieFilterDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.MovieMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.MovieRepository;
+import com.alkemy.projectDisney.projectDisney.repositories.specification.MovieSpecification;
 import com.alkemy.projectDisney.projectDisney.services.CharacterService;
 import com.alkemy.projectDisney.projectDisney.services.GenreService;
 import com.alkemy.projectDisney.projectDisney.services.MovieService;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -26,6 +30,8 @@ public class MovieServiceImpl implements MovieService {
     public CharacterService characterService;
     @Autowired
     public GenreService genreService;
+    @Autowired
+    private MovieSpecification movieSpecification;
 
     public MovieDTO save(MovieDTO dto){
         MovieEntity mEntity = movieMapper.movieDTO2Entity(dto, true);
@@ -47,7 +53,7 @@ public class MovieServiceImpl implements MovieService {
 
         return result;
     }
-//PRUEBA
+
     //@Transactional
     public void addCharacter(Long movieId, Long characterId) {
         MovieEntity movieEntity = this.getById(movieId);
@@ -87,6 +93,15 @@ public class MovieServiceImpl implements MovieService {
         MovieEntity movieEntity = movieRepository.save(savedMovie);
         MovieDTO result = movieMapper.movieEntity2DTO(movieEntity, true);
 
+        return result;
+    }
+
+    //PRUEBA CRITERIA
+    @Override
+    public List<MovieBasicDTO> getByFilters(String title, Set<Long> characters, String order) {
+        MovieFilterDTO movieFilters = new MovieFilterDTO(title, characters, order);
+        List<MovieEntity> entityList = movieRepository.findAll(movieSpecification.getFiltered(movieFilters));
+        List<MovieBasicDTO> result = movieMapper.movieEntityList2MovieBasicDTOList(entityList, true);
         return result;
     }
 }

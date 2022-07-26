@@ -1,6 +1,7 @@
 package com.alkemy.projectDisney.projectDisney.controllers;
 
 
+import com.alkemy.projectDisney.projectDisney.dto.MovieBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
 import com.alkemy.projectDisney.projectDisney.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("movies")
@@ -60,5 +62,15 @@ public class MovieController {
         MovieDTO editedMovie = movieService.modify(id, movieDTO);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedMovie);
+    }
+    //PRUEBA CRITERIA
+
+    @GetMapping("/filters")
+    public ResponseEntity<List<MovieBasicDTO>> getByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Set<Long> character,
+            @RequestParam(required = false, defaultValue = "ASC") String order){
+        List<MovieBasicDTO> dtoList = this.movieService.getByFilters(name, character, order);
+        return ResponseEntity.ok(dtoList);
     }
 }

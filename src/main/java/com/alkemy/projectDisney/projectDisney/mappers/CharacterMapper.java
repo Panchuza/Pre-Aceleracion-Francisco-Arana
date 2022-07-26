@@ -1,7 +1,9 @@
 package com.alkemy.projectDisney.projectDisney.mappers;
 
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
+import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
+import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,13 +40,13 @@ public class CharacterMapper {
         dto.setHistory(entity.getHistory());
         dto.setWeight(entity.getWeight());
 
-//        if (loadMovie) {
-//            List<MovieDTO> dtoList = new ArrayList<>();
-//            for (MovieEntity mEntity : entity.getMovies()) {
-//                dtoList.add(movieMapper.movieEntity2DTO(mEntity, false));
-//            }
-//            dto.setMovies(dtoList);
-//        }
+        if (loadMovie) {
+            List<MovieDTO> dtoList = new ArrayList<>();
+            for (MovieEntity mEntity : entity.getMovies()) {
+                dtoList.add(movieMapper.movieEntity2DTO(mEntity, false));
+            }
+            dto.setMovies(dtoList);
+        }
 
         return dto;
     }

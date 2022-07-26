@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("characters")
@@ -68,5 +69,15 @@ public class CharacterController {
     public ResponseEntity<Void> addCharacter(@PathVariable Long movieId, @RequestParam Long characterId) {
         movieService.addCharacter(movieId, characterId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    //PRUEBA CRITERIA
+    @GetMapping("/characters")
+    public ResponseEntity<List<CharacterDTO>> getByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Set<Long> movies,
+            @RequestParam(required = false) Integer age){
+        List<CharacterDTO> dtoList = this.characterService.getByFilters(name, movies, age);
+        return ResponseEntity.ok(dtoList);
     }
 }
