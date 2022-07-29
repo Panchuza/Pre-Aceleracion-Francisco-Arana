@@ -1,6 +1,9 @@
 package com.alkemy.projectDisney.projectDisney.mappers;
 
+import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
+import com.alkemy.projectDisney.projectDisney.dto.GenreBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.GenreDTO;
+import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.GenreEntity;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +23,7 @@ public class GenreMapper {
         return genreEntity;
     }
 
-    public GenreDTO genreEntity2DTO(GenreEntity entity) {
+    public GenreDTO genreEntity2DTO(GenreEntity entity, boolean loadMovie) {
         GenreDTO dto = new GenreDTO();
 
         dto.setId(entity.getId());
@@ -30,14 +33,13 @@ public class GenreMapper {
         return dto;
     }
 
-    public List<GenreDTO> genreEntityList2GenreDTOList(List<GenreEntity> entities) {
+    //PRUEBA CRITERIA
+    public GenreBasicDTO genreEntity2BasicDTO(GenreEntity entity, boolean loadMovie) {
+        GenreBasicDTO dto = new GenreBasicDTO();
 
-        List<GenreDTO> dtos = new ArrayList<>();
+        dto.setName(entity.getName());
 
-        for (GenreEntity gEntity: entities) {
-
-            dtos.add(genreEntity2DTO(gEntity));
-        }
-        return dtos;
+        return dto;
     }
+
 }
