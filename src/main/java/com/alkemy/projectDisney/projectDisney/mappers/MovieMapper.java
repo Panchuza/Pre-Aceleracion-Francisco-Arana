@@ -3,12 +3,7 @@ package com.alkemy.projectDisney.projectDisney.mappers;
 import com.alkemy.projectDisney.projectDisney.dto.MovieBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +33,7 @@ public class MovieMapper {
         return movieEntity;
     }
 
-    public MovieDTO movieEntity2DTO(MovieEntity entity, boolean load) {
+    public MovieDTO movieEntity2DTO(MovieEntity entity) {
         MovieDTO dto = new MovieDTO();
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
@@ -59,22 +54,22 @@ public class MovieMapper {
         return dto;
     }
 
-    public List<MovieDTO> movieEntityList2MovieDTOList(List<MovieEntity> entities, boolean load) {
+    public List<MovieDTO> movieEntityList2MovieDTOList(List<MovieEntity> entities) {
 
         List<MovieDTO> dtos = new ArrayList<>();
 
         for (MovieEntity mEntity: entities) {
-             dtos.add(movieEntity2DTO(mEntity, load));
+             dtos.add(movieEntity2DTO(mEntity));
         }
 
         return dtos;
     }
 
-    public List<MovieEntity> movieDTOList2EntityList(List<MovieDTO> dtoList, boolean load) {
+    public List<MovieEntity> movieDTOList2EntityList(List<MovieDTO> dtoList) {
         List<MovieEntity> entities = new ArrayList<>();
 
         for (MovieDTO dto : dtoList) {
-            entities.add(this.movieDTO2Entity(dto, load));
+            entities.add(this.movieDTO2Entity(dto));
         }
         return entities;
     }

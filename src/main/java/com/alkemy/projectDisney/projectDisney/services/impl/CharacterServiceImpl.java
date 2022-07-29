@@ -3,15 +3,13 @@ package com.alkemy.projectDisney.projectDisney.services.impl;
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
 import com.alkemy.projectDisney.projectDisney.dto.CharacterFilterDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
-import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
-import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.CharacterMapper;
 import com.alkemy.projectDisney.projectDisney.mappers.MovieMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.CharacterRepository;
 import com.alkemy.projectDisney.projectDisney.repositories.specification.CharacterSpecification;
 import com.alkemy.projectDisney.projectDisney.services.CharacterService;
-import com.alkemy.projectDisney.projectDisney.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,12 +33,14 @@ public class CharacterServiceImpl implements CharacterService {
     @Autowired
     private MovieService movieService;
 
+
     public List<CharacterDTO> getAllCharacters() {
         List<CharacterEntity> entities = characterRepository.findAll();
         List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entities, true);
 
         return result;
     }
+
 
     public CharacterDTO save(CharacterDTO dto) {
 
@@ -50,6 +50,7 @@ public class CharacterServiceImpl implements CharacterService {
 
         return result;
     }
+
 //PRUEBA
     @Override
     public CharacterEntity getCharacterById(Long id) {
@@ -109,4 +110,5 @@ public class CharacterServiceImpl implements CharacterService {
         List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entityList, true);
         return result;
     }
+
 }

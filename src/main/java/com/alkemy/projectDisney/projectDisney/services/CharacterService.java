@@ -1,7 +1,7 @@
 package com.alkemy.projectDisney.projectDisney.services;
 
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
-import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
+
 
 import java.util.List;
 import java.util.Set;

@@ -31,7 +31,7 @@ public class CharacterMapper {
         return characterEntity;
     }
 
-    public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean loadMovie) {
+    public CharacterDTO characterEntity2DTO(CharacterEntity entity) {
 
         CharacterDTO dto = new CharacterDTO();
         dto.setId(entity.getId());
@@ -51,7 +51,6 @@ public class CharacterMapper {
 
         return dto;
     }
-
     public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities, boolean loadMovie) {
         List<CharacterDTO> dtoList = new ArrayList<>();
 

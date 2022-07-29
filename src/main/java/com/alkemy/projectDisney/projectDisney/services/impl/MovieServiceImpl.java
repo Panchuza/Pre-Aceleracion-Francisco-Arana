@@ -5,7 +5,6 @@ import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
 import com.alkemy.projectDisney.projectDisney.dto.MovieFilterDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
-import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.MovieMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.MovieRepository;
 import com.alkemy.projectDisney.projectDisney.repositories.specification.MovieSpecification;
