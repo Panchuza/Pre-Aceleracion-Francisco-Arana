@@ -12,7 +12,8 @@ public class SendMailServiceImpl {
     private JavaMailSender javaMailSender;
 
     @Async
-    public void sendWelcomeEmailTo( String email){
+    public void sendWelcomeEmailTo(String email){
+
         SimpleMailMessage mensaje = new SimpleMailMessage();
         mensaje.setTo(email);
         mensaje.setFrom("noreply@disneyalkemy.com");
