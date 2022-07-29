@@ -12,7 +12,7 @@ import lombok.Setter;
 public class MovieFilterDTO {
 
     private String title;
-    private Set<Long> character;
+    private Set<Long> genre;
     private String order;
 
     public boolean isASC() {

@@ -14,6 +14,7 @@ import com.alkemy.projectDisney.projectDisney.services.GenreService;
 import com.alkemy.projectDisney.projectDisney.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,16 +44,16 @@ public class MovieServiceImpl implements MovieService {
 
     public List<MovieDTO> getAllMovies() {
         List<MovieEntity> entities = movieRepository.findAll();
-        List<MovieDTO> result = movieMapper.movieEntityList2MovieDTOList(entities, false);
-
-        return result;
-    }
-    public List<MovieDTO> getAllMoviesAndCharacters() {
-        List<MovieEntity> entities = movieRepository.findAll();
         List<MovieDTO> result = movieMapper.movieEntityList2MovieDTOList(entities, true);
 
         return result;
     }
+//    public List<MovieBasicDTO> getAllMoviesAndCharacters() {
+//        List<MovieEntity> entities = movieRepository.findAll();
+//        List<MovieBasicDTO> result = movieMapper.movieEntityList2MovieBasicDTOList(entities, true);
+//
+//        return result;
+//    }
 
     //@Transactional
     public void addCharacter(Long movieId, Long characterId) {
@@ -98,10 +99,20 @@ public class MovieServiceImpl implements MovieService {
 
     //PRUEBA CRITERIA
     @Override
-    public List<MovieBasicDTO> getByFilters(String title, Set<Long> characters, String order) {
-        MovieFilterDTO movieFilters = new MovieFilterDTO(title, characters, order);
+    public List<MovieBasicDTO> getByFilters(String title, Set<Long> genre, String order) {
+        MovieFilterDTO movieFilters = new MovieFilterDTO(title, genre, order);
         List<MovieEntity> entityList = movieRepository.findAll(movieSpecification.getFiltered(movieFilters));
         List<MovieBasicDTO> result = movieMapper.movieEntityList2MovieBasicDTOList(entityList, true);
         return result;
+    }
+
+    @Override
+    @Transactional
+    public void removeCharacter(Long id, Long idCharacter){
+        MovieEntity movieEntity = this.getById(id);
+        movieEntity.getCharacters();
+        CharacterEntity character = this.characterService.getCharacterById(idCharacter);
+        movieEntity.getCharacters().remove(character);
+        this.movieRepository.save(movieEntity);
     }
 }

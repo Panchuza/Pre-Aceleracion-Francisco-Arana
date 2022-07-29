@@ -1,7 +1,8 @@
 package com.alkemy.projectDisney.projectDisney.mappers;
 
+import com.alkemy.projectDisney.projectDisney.dto.CharacterBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
-import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
+import com.alkemy.projectDisney.projectDisney.dto.MovieBasicDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class CharacterMapper {
         dto.setWeight(entity.getWeight());
 
         if (loadMovie) {
-            List<MovieDTO> dtoList = new ArrayList<>();
+            List<MovieBasicDTO> dtoList = new ArrayList<>();
             for (MovieEntity mEntity : entity.getMovies()) {
-                dtoList.add(movieMapper.movieEntity2DTO(mEntity, false));
+                dtoList.add(movieMapper.movieEntity2BasicDTO(mEntity, true));
             }
             dto.setMovies(dtoList);
         }
@@ -51,7 +52,6 @@ public class CharacterMapper {
         return dto;
     }
 
-    //PRUEBA
     public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities, boolean loadMovie) {
         List<CharacterDTO> dtoList = new ArrayList<>();
 
@@ -70,4 +70,23 @@ public class CharacterMapper {
         return entities;
     }
 
+    //PRUEBA CRITERIA
+    public List<CharacterBasicDTO> characterEntityList2BasicDTOList(List<CharacterEntity> entities, boolean loadMovie) {
+        List<CharacterBasicDTO> dtoList = new ArrayList<>();
+
+        for (CharacterEntity entity : entities) {
+            dtoList.add(characterEntity2BasicDTO(entity, loadMovie));
+        }
+        return dtoList;
+    }
+
+    public CharacterBasicDTO characterEntity2BasicDTO(CharacterEntity entity, boolean loadMovie) {
+
+        CharacterBasicDTO dto = new CharacterBasicDTO();
+        dto.setName(entity.getName());
+        dto.setHistory(entity.getHistory());
+        dto.setImage(entity.getImage());
+
+        return dto;
+    }
 }

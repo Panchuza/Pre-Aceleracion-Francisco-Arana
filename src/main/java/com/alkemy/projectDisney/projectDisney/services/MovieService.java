@@ -20,10 +20,12 @@ public interface MovieService {
 
     MovieDTO modify (Long id, MovieDTO movieDTO);
 
-    List<MovieDTO> getAllMoviesAndCharacters();
+//    List<MovieBasicDTO> getAllMoviesAndCharacters();
 
     void addGenre(Long movieId, Long genreId);
 
     //PRUEBA CRITERIA
     List<MovieBasicDTO> getByFilters(String name, Set<Long> characters, String order);
+
+    void removeCharacter(Long movieId, Long characterId);
 }

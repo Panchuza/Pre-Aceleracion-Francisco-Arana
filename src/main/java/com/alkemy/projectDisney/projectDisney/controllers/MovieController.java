@@ -24,11 +24,11 @@ public class MovieController {
         List<MovieDTO> movies = movieService.getAllMovies();
         return ResponseEntity.ok().body(movies);
     }
-    @GetMapping("/alldetails")
-    public ResponseEntity<List<MovieDTO>> getAllMovAndChar(){
-        List<MovieDTO> movies = movieService.getAllMoviesAndCharacters();
-        return ResponseEntity.ok().body(movies);
-    }
+//    @GetMapping("/alldetails")
+//    public ResponseEntity<List<MovieBasicDTO>> getAllMovAndChar(){
+//        List<MovieBasicDTO> movies = movieService.getAllMoviesAndCharacters();
+//        return ResponseEntity.ok().body(movies);
+//    }
 
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie){
@@ -72,5 +72,11 @@ public class MovieController {
             @RequestParam(required = false, defaultValue = "ASC") String order){
         List<MovieBasicDTO> dtoList = this.movieService.getByFilters(name, character, order);
         return ResponseEntity.ok(dtoList);
+    }
+
+    @DeleteMapping("/{movieId}/character/{characterId}")
+    public ResponseEntity<Void> removeCharacter(@PathVariable Long movieId, @PathVariable Long characterId) throws Exception {
+        movieService.removeCharacter(movieId, characterId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

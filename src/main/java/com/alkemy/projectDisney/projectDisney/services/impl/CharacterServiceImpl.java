@@ -62,7 +62,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public void addMovie(Long id, Long idMovie) {
-        CharacterEntity charEntity = characterRepository.getById(id);
+        CharacterEntity charEntity = this.getCharacterById(id);
         charEntity.getMovies().size();
         MovieEntity movie = this.movieService.getById(idMovie);
         charEntity.getMovies().add(movie);
@@ -72,8 +72,8 @@ public class CharacterServiceImpl implements CharacterService {
     @Override
     @Transactional
     public void removeMovie(Long id, Long idMovie) {
-        CharacterEntity charEntity = characterRepository.getById(id);
-        charEntity.getMovies().size();
+        CharacterEntity charEntity = this.getCharacterById(id);
+        charEntity.getMovies();
         MovieEntity movie = this.movieService.getById(idMovie);
         charEntity.getMovies().remove(movie);
         this.characterRepository.save(charEntity);

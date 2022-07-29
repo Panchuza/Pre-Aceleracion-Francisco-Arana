@@ -53,11 +53,11 @@ public class CharacterController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedCharacter);
     }
 
-    @PutMapping("/{id}/movie/{idMovie}")
-    public ResponseEntity<Void> addMovie(@PathVariable Long id, @PathVariable Long idMovie) {
-        this.characterService.addMovie(id, idMovie);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+//    @PutMapping("/{id}/movie/{idMovie}")
+//    public ResponseEntity<Void> addMovie(@PathVariable Long id, @PathVariable Long idMovie) {
+//        this.characterService.addMovie(id, idMovie);
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
 
     @DeleteMapping("/{id}/movie/{idMovie}")
     public ResponseEntity<Void> removeMovie(@PathVariable Long id, @PathVariable Long idMovie) {
@@ -65,7 +65,7 @@ public class CharacterController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PostMapping("/{movieId}/character/{charId}")
+    @PutMapping("/{movieId}/character/{charId}")
     public ResponseEntity<Void> addCharacter(@PathVariable Long movieId, @RequestParam Long characterId) {
         movieService.addCharacter(movieId, characterId);
         return ResponseEntity.status(HttpStatus.CREATED).build();

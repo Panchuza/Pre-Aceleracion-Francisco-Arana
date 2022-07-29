@@ -2,7 +2,7 @@ package com.alkemy.projectDisney.projectDisney.repositories.specification;
 
 
 import com.alkemy.projectDisney.projectDisney.dto.MovieFilterDTO;
-import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
+import com.alkemy.projectDisney.projectDisney.entities.GenreEntity;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,11 @@ import org.springframework.util.StringUtils;
 public class MovieSpecification {
     public Specification<MovieEntity> getFiltered(MovieFilterDTO movieFilters){
 
-        // Lambda Function:
+        //Lambda Function:
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            // == Title ==
+            //Title
             if(StringUtils.hasLength(movieFilters.getTitle())) {
                 predicates.add(
                         criteriaBuilder.like(
@@ -34,16 +34,16 @@ public class MovieSpecification {
                 );
             }
 
-            // == Characters ==
-            if(!CollectionUtils.isEmpty(movieFilters.getCharacter())) {
-                Join<MovieEntity, CharacterEntity> join = root.join("movieCharacters", JoinType.INNER);
-                Expression<String> characterId = join.get("id");
-                predicates.add(characterId.in(movieFilters.getCharacter()));
+            //Genre
+            if(!CollectionUtils.isEmpty(movieFilters.getGenre())) {
+                Join<MovieEntity, GenreEntity> join = root.join("movieGenre", JoinType.INNER);
+                Expression<String> genreId = join.get("id");
+                predicates.add(genreId.in(movieFilters.getGenre()));
             }
             //Remove duplicates
             query.distinct(true);
 
-            // == Order ==
+            //Order
             String orderByField = "title";
             query.orderBy(
                     movieFilters.isASC() ?
@@ -52,7 +52,7 @@ public class MovieSpecification {
             );
 
 
-            // MAIN RETURN:
+            //MAIN RETURN:
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

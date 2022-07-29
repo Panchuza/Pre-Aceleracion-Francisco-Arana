@@ -3,12 +3,9 @@ package com.alkemy.projectDisney.projectDisney.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-public class MovieBasicDTO {
+public class GenreBasicDTO {
 
-    private String title;
-    private String image;
-    private String creationDate;
+    private String name;
 }

@@ -20,11 +20,11 @@ public class CharacterSpecification {
 
     public Specification<CharacterEntity> getFiltered(CharacterFilterDTO characterFilters){
 
-        // Lambda Function:
+        //Lambda Function:
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            // == Name ==
+            //Name
             if(StringUtils.hasLength(characterFilters.getName())) {
                 predicates.add(
                         criteriaBuilder.like(
@@ -33,16 +33,16 @@ public class CharacterSpecification {
                         )
                 );
             }
-            // == Movies ==
+            //Movies
             if(!CollectionUtils.isEmpty(characterFilters.getMovies())) {
-                Join<CharacterEntity, MovieEntity> join = root.join("charactersMovie", JoinType.INNER);
+                Join<CharacterEntity, MovieEntity> join = root.join("movies", JoinType.INNER);
                 Expression<String> movieId = join.get("id");
                 predicates.add(movieId.in(characterFilters.getMovies()));
             }
             //Remove duplicates
             query.distinct(true);
 
-            // MAIN RETURN:
+            //MAIN RETURN:
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

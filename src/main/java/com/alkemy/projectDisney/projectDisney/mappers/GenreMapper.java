@@ -1,6 +1,7 @@
 package com.alkemy.projectDisney.projectDisney.mappers;
 
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
+import com.alkemy.projectDisney.projectDisney.dto.GenreBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.GenreDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.GenreEntity;
@@ -28,6 +29,15 @@ public class GenreMapper {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setImage(entity.getImage());
+
+        return dto;
+    }
+
+    //PRUEBA CRITERIA
+    public GenreBasicDTO genreEntity2BasicDTO(GenreEntity entity, boolean loadMovie) {
+        GenreBasicDTO dto = new GenreBasicDTO();
+
+        dto.setName(entity.getName());
 
         return dto;
     }
