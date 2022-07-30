@@ -3,11 +3,14 @@ package com.alkemy.projectDisney.projectDisney.services.impl;
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
 import com.alkemy.projectDisney.projectDisney.dto.CharacterFilterDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
+import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
+import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.CharacterMapper;
 import com.alkemy.projectDisney.projectDisney.mappers.MovieMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.CharacterRepository;
 import com.alkemy.projectDisney.projectDisney.repositories.specification.CharacterSpecification;
 import com.alkemy.projectDisney.projectDisney.services.CharacterService;
+import com.alkemy.projectDisney.projectDisney.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Lazy;
@@ -41,7 +44,6 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
-
     public CharacterDTO save(CharacterDTO dto) {
 
         CharacterEntity cEntity = characterMapper.characterDTO2Entity(dto);
@@ -51,7 +53,6 @@ public class CharacterServiceImpl implements CharacterService {
         return result;
     }
 
-//PRUEBA
     @Override
     public CharacterEntity getCharacterById(Long id) {
         Optional<CharacterEntity> characterEntity = characterRepository.findById(id);
@@ -94,8 +95,6 @@ public class CharacterServiceImpl implements CharacterService {
         savedCharacter.setHistory(characterDTO.getHistory());
         savedCharacter.setWeight(savedCharacter.getWeight());
         savedCharacter.setAge(characterDTO.getAge());
-
-        //savedCharacter.setMovies(movieMapper.movieEntityList2MovieDTOList(characterDTO));
 
         CharacterEntity characterEntity = characterRepository.save(savedCharacter);
         CharacterDTO result = characterMapper.characterEntity2DTO(characterEntity, false);

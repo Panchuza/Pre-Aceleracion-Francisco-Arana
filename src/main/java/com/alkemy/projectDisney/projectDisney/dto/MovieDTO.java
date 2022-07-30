@@ -15,7 +15,6 @@ public class MovieDTO {
     private Integer score;
     private String title;
     private String creationDate;
-    //PRUEBA
     private List<CharacterBasicDTO> characters;
     private GenreBasicDTO genre;
 }

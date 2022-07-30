@@ -5,6 +5,7 @@ import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
 import com.alkemy.projectDisney.projectDisney.dto.MovieFilterDTO;
 import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
+import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.MovieMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.MovieRepository;
 import com.alkemy.projectDisney.projectDisney.repositories.specification.MovieSpecification;
@@ -47,14 +48,7 @@ public class MovieServiceImpl implements MovieService {
 
         return result;
     }
-//    public List<MovieBasicDTO> getAllMoviesAndCharacters() {
-//        List<MovieEntity> entities = movieRepository.findAll();
-//        List<MovieBasicDTO> result = movieMapper.movieEntityList2MovieBasicDTOList(entities, true);
-//
-//        return result;
-//    }
 
-    //@Transactional
     public void addCharacter(Long movieId, Long characterId) {
         MovieEntity movieEntity = this.getById(movieId);
 
@@ -91,12 +85,10 @@ public class MovieServiceImpl implements MovieService {
         savedMovie.setScore(moviedto.getScore());
 
         MovieEntity movieEntity = movieRepository.save(savedMovie);
-        MovieDTO result = movieMapper.movieEntity2DTO(movieEntity, true);
+        MovieDTO result = movieMapper.movieEntity2DTO(movieEntity, false);
 
         return result;
     }
-
-    //PRUEBA CRITERIA
     @Override
     public List<MovieBasicDTO> getByFilters(String title, Set<Long> genre, String order) {
         MovieFilterDTO movieFilters = new MovieFilterDTO(title, genre, order);

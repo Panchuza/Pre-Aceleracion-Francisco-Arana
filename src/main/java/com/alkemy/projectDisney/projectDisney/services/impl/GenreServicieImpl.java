@@ -2,7 +2,6 @@ package com.alkemy.projectDisney.projectDisney.services.impl;
 
 import com.alkemy.projectDisney.projectDisney.dto.GenreDTO;
 import com.alkemy.projectDisney.projectDisney.entities.GenreEntity;
-import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 import com.alkemy.projectDisney.projectDisney.exceptions.ParamNotFound;
 import com.alkemy.projectDisney.projectDisney.mappers.GenreMapper;
 import com.alkemy.projectDisney.projectDisney.repositories.GenreRepository;

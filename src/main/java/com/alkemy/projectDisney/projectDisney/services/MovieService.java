@@ -2,6 +2,7 @@ package com.alkemy.projectDisney.projectDisney.services;
 
 import com.alkemy.projectDisney.projectDisney.dto.MovieBasicDTO;
 import com.alkemy.projectDisney.projectDisney.dto.MovieDTO;
+import com.alkemy.projectDisney.projectDisney.entities.MovieEntity;
 
 
 import java.util.List;
@@ -21,12 +22,7 @@ public interface MovieService {
 
     MovieDTO modify (Long id, MovieDTO movieDTO);
 
-//    List<MovieBasicDTO> getAllMoviesAndCharacters();
-
     void addGenre(Long movieId, Long genreId);
-
-    //PRUEBA CRITERIA
     List<MovieBasicDTO> getByFilters(String name, Set<Long> characters, String order);
-
     void removeCharacter(Long movieId, Long characterId);
 }

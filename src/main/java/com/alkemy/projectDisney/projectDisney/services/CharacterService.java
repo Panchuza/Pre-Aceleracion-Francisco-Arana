@@ -1,6 +1,7 @@
 package com.alkemy.projectDisney.projectDisney.services;
 
 import com.alkemy.projectDisney.projectDisney.dto.CharacterDTO;
+import com.alkemy.projectDisney.projectDisney.entities.CharacterEntity;
 
 
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.Set;
 public interface CharacterService {
 
     CharacterDTO save (CharacterDTO dto);
-    //PRUEBA
 
     CharacterEntity getCharacterById(Long id);
 
@@ -23,6 +23,5 @@ public interface CharacterService {
 
     List<CharacterDTO> getAllCharacters();
 
-    //PRUEBA CRITERIA
     List<CharacterDTO> getByFilters(String name, Set<Long> movies, Integer age);
 }

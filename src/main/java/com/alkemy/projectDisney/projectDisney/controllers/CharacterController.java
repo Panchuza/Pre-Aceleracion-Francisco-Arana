@@ -16,14 +16,9 @@ import java.util.Set;
 public class CharacterController {
 
     @Autowired
-    CharacterService characterService;
+    private CharacterService characterService;
     @Autowired
     private MovieService movieService;
-
-//    @Autowired
-//    public CharacterController(CharacterService characterService) {
-//        this.characterService = characterService;
-//    }
 
     @GetMapping("/getAll")
     public ResponseEntity<List<CharacterDTO>> getAll(){
@@ -53,25 +48,12 @@ public class CharacterController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedCharacter);
     }
 
-//    @PutMapping("/{id}/movie/{idMovie}")
-//    public ResponseEntity<Void> addMovie(@PathVariable Long id, @PathVariable Long idMovie) {
-//        this.characterService.addMovie(id, idMovie);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-
     @DeleteMapping("/{id}/movie/{idMovie}")
     public ResponseEntity<Void> removeMovie(@PathVariable Long id, @PathVariable Long idMovie) {
         this.characterService.removeMovie(id, idMovie);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/{movieId}/character/{charId}")
-    public ResponseEntity<Void> addCharacter(@PathVariable Long movieId, @RequestParam Long characterId) {
-        movieService.addCharacter(movieId, characterId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    //PRUEBA CRITERIA
     @GetMapping("/characters")
     public ResponseEntity<List<CharacterDTO>> getByFilters(
             @RequestParam(required = false) String name,

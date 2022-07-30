@@ -20,9 +20,9 @@ public class GenreController {
     @PostMapping
     public ResponseEntity<GenreDTO> save(@RequestBody GenreDTO genre){
 
-        GenreDTO genreSaved = genreService.save(genre);//save genre
+        GenreDTO genreSaved = genreService.save(genre);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(genreSaved);//201 genre saved
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreSaved);
     }
 
 }

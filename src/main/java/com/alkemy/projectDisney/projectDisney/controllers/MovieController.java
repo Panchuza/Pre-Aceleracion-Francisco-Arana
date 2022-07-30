@@ -24,11 +24,6 @@ public class MovieController {
         List<MovieDTO> movies = movieService.getAllMovies();
         return ResponseEntity.ok().body(movies);
     }
-//    @GetMapping("/alldetails")
-//    public ResponseEntity<List<MovieBasicDTO>> getAllMovAndChar(){
-//        List<MovieBasicDTO> movies = movieService.getAllMoviesAndCharacters();
-//        return ResponseEntity.ok().body(movies);
-//    }
 
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movie){
@@ -37,7 +32,6 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.CREATED).body(movieSaved); //201 movie saved
     }
 
-    //PRUEBA
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         movieService.deleteMovieById(id);
@@ -63,8 +57,6 @@ public class MovieController {
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(editedMovie);
     }
-    //PRUEBA CRITERIA
-
     @GetMapping("/filters")
     public ResponseEntity<List<MovieBasicDTO>> getByFilters(
             @RequestParam(required = false) String name,

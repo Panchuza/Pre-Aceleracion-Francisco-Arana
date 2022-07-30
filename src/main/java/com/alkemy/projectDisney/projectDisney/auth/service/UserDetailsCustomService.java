@@ -26,7 +26,6 @@ public class UserDetailsCustomService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         UserEntity userEntity = userRepository.findByUsername(username);
-        //if (userEntity == null)
         if (username == null) {
             throw new UsernameNotFoundException("Username or password not found.");
         }
